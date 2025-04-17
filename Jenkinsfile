@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'windows' // Assumes Jenkins agent is Windows
-    }
+    agent any
     environment {
         DOCKER_USERNAME = credentials('docker-username') // Jenkins credentials ID
         DOCKER_PASSWORD = credentials('docker-password') // Jenkins credentials ID
