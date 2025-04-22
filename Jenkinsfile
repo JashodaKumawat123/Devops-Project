@@ -7,28 +7,29 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Git plugin assumes repo is already set or use git url: '...'
                 checkout scm
             }
         }
         stage('Docker Login') {
             steps {
-                sh '''
-                    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-                '''
+                bat """
+                    echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin
+                """
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh '''
-                    docker build -t "$DOCKER_USERNAME/ml-api:latest" .
-                '''
+                bat """
+                    docker build -t %DOCKER_USERNAME%/ml-api:latest .
+                """
             }
         }
         stage('Push Docker Image') {
             steps {
-                sh '''
-                    docker push "$DOCKER_USERNAME/ml-api:latest"
-                '''
+                bat """
+                    docker push %DOCKER_USERNAME%/ml-api:latest
+                """
             }
         }
     }
