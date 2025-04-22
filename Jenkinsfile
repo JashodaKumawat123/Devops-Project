@@ -13,7 +13,9 @@ pipeline {
         }
         stage('Docker Login') {
             steps {
-                bat "docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%"
+                bat """
+                    echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin
+                """
             }
         }
         stage('Build Docker Image') {
